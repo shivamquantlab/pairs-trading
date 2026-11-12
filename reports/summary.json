@@ -1,0 +1,10 @@
+{
+  "seed": 101,
+  "formation_observations": 150,
+  "trading_observations": 300,
+  "formation_intercept": -4.846021479639835,
+  "formation_hedge_ratio": 1.2862684140730185,
+  "two_leg_cost_bps_per_turnover_unit": 6.0,
+  "synthetic_cumulative_spread_pnl": 0.15234331854772137,
+  "position_changes": 32.0
+}
