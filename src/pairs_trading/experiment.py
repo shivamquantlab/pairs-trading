@@ -29,8 +29,12 @@ def run(output_dir: Path, seed: int = 101) -> dict[str, float]:
     positions = pair_positions(zscore[:-1], entry=1.5, exit=0.4)
     spread_change = np.diff(test_spread)
     turnover = np.abs(np.diff(np.concatenate(([0.0], positions))))
-    # Two synthetic legs; cost is a labeled illustrative 3 bp per leg and turnover unit.
-    net_pnl = positions * spread_change - turnover * (2.0 * 3.0 / 10_000.0)
+    # One y leg and abs(beta) x-leg notional; include liquidation at the sample end.
+    if turnover.size:
+        turnover[-1] += abs(positions[-1])
+    per_leg_cost_bps = 3.0
+    two_leg_cost_bps = per_leg_cost_bps * (1.0 + abs(beta))
+    net_pnl = positions * spread_change - turnover * (two_leg_cost_bps / 10_000.0)
     cumulative_pnl = np.cumsum(net_pnl)
     summary = {
         "seed": seed,
@@ -38,7 +42,9 @@ def run(output_dir: Path, seed: int = 101) -> dict[str, float]:
         "trading_observations": int(test_spread.size),
         "formation_intercept": intercept,
         "formation_hedge_ratio": beta,
-        "two_leg_cost_bps_per_turnover_unit": 6.0,
+        "per_leg_cost_bps": per_leg_cost_bps,
+        "two_leg_cost_bps_per_turnover_unit": two_leg_cost_bps,
+        "terminal_liquidation_included": True,
         "synthetic_cumulative_spread_pnl": float(cumulative_pnl[-1]),
         "position_changes": float(turnover.sum()),
     }

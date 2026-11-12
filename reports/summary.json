@@ -2,9 +2,11 @@
   "seed": 101,
   "formation_observations": 150,
   "trading_observations": 300,
-  "formation_intercept": -4.846021479639835,
-  "formation_hedge_ratio": 1.2862684140730185,
-  "two_leg_cost_bps_per_turnover_unit": 6.0,
-  "synthetic_cumulative_spread_pnl": 0.15234331854772137,
+  "formation_intercept": -4.846021479639839,
+  "formation_hedge_ratio": 1.2862684140730196,
+  "per_leg_cost_bps": 3.0,
+  "two_leg_cost_bps_per_turnover_unit": 6.858805242219059,
+  "terminal_liquidation_included": true,
+  "synthetic_cumulative_spread_pnl": 0.1495951417726194,
   "position_changes": 32.0
 }
